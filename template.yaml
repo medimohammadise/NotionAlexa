@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: NotionAlexa - Serverless Alexa skill backend using Spring Modulith
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: java17
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        SPRING_CLOUD_FUNCTION_DEFINITION: alexaSkillFunction
+
+Resources:
+  NotionAlexaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: NotionAlexaFunction
+      Handler: com.notionalexa.alexa.AlexaSkillHandler
+      CodeUri: build/libs/notion-alexa-1.0.0-SNAPSHOT.jar
+      Description: Handles Alexa skill requests and reads Notion notes aloud
+      Environment:
+        Variables:
+          NOTION_API_KEY: "{{resolve:ssm:/notionalexa/notion-api-key}}"
+          NOTION_DATABASE_ID: "{{resolve:ssm:/notionalexa/notion-database-id}}"
+      Events:
+        AlexaSkillEvent:
+          Type: AlexaSkill
+          Properties:
+            SkillId: "{{resolve:ssm:/notionalexa/alexa-skill-id}}"
+
+Outputs:
+  NotionAlexaFunction:
+    Description: NotionAlexa Lambda Function ARN
+    Value: !GetAtt NotionAlexaFunction.Arn
