@@ -132,11 +132,14 @@ public class StickyNoteController {
      * GET /api/stickynotes/search?keyword=...
      *
      * @param keyword the search keyword
-     * @return list of matching sticky notes
+     * @return list of matching sticky notes, or bad request if keyword is empty
      */
     @GetMapping("/search")
     public ResponseEntity<List<StickyNote>> searchNotes(@RequestParam String keyword) {
-        List<StickyNote> results = stickyNoteService.searchNotes(keyword);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<StickyNote> results = stickyNoteService.searchNotes(keyword.trim());
         return ResponseEntity.ok(results);
     }
 }

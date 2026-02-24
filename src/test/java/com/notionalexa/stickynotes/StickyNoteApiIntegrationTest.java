@@ -171,4 +171,20 @@ class StickyNoteApiIntegrationTest {
         assertEquals(1, response.getBody().length);
         assertEquals("Shopping List", response.getBody()[0].getTitle());
     }
+
+    @Test
+    void testSearchNotesWithEmptyKeyword() {
+        ResponseEntity<StickyNote[]> response = restTemplate.getForEntity(
+                baseUrl + "/search?keyword=", StickyNote[].class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void testSearchNotesWithWhitespaceKeyword() {
+        ResponseEntity<StickyNote[]> response = restTemplate.getForEntity(
+                baseUrl + "/search?keyword=   ", StickyNote[].class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
 }
