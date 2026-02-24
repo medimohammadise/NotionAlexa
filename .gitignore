@@ -1,0 +1,49 @@
+# Maven
+target/
+*.class
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Gradle
+build/
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.eclipse/
+*.swp
+*.swo
+*.DS_Store
+
+# Spring Boot
+spring-shell.log
+
+# Build output
+out/
+
+# Local config (contains secrets)
+src/main/resources/application-local.yml
+
+# SSL Certificates (local development only)
+*.p12
+*.jks
+*.keystore
+*.pem
+*.crt
+*.key
+
+# SAM build artifacts
+.aws-sam/
+samconfig.toml

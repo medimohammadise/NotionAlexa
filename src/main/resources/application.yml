@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: notion-alexa
+
+server:
+  port: 8080
+
+# Disable local Alexa endpoint by default (Lambda mode)
+alexa:
+  local:
+    enabled: false
+
+notion:
+  api-key: ${NOTION_API_KEY:}
+  database-id: ${NOTION_DATABASE_ID:}
+  max-results: 5
